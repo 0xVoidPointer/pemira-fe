@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
   LoginForm,
   AuthHero,
-  Stepper,
-  Navbar,
   FooterStat,
 } from "#/features/auth";
 import z from "zod";
+import { Stepper } from "#/components/ui/stepper";
+import { Navbar } from "#/components/ui/navbar";
 
 const authSearchSchema = z.object({
   loginAs: z.enum(["mahasiswa", "panitia"]).catch("mahasiswa"),
