@@ -6,9 +6,15 @@ import {
   Navbar,
   FooterStat,
 } from "#/features/auth";
+import z from "zod";
+
+const authSearchSchema = z.object({
+  loginAs: z.enum(["mahasiswa", "panitia"]).catch("mahasiswa"),
+});
 
 export const Route = createFileRoute("/_guest/auth")({
   component: RouteComponent,
+  validateSearch: authSearchSchema,
 });
 
 function RouteComponent() {
