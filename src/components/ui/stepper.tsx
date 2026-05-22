@@ -1,12 +1,7 @@
 import { cn } from "#/lib/utils";
-import { getRouteApi } from "@tanstack/react-router";
 
-export function Stepper() {
+export function Stepper({ steps = 1 }: { steps?: number }) {
   const totalSteps: number = 5;
-
-  const routeApi = getRouteApi("/_authenticated");
-
-  const { steps } = routeApi.useSearch();
 
   return (
     <section className="flex flex-row gap-x-2">
@@ -14,7 +9,7 @@ export function Stepper() {
         <div
           className={cn(
             `bg-primary w-2 h-2 rounded-sm transition-all duration-300 ease-in-out`,
-            i !== steps - 1 ? "opacity-50" : "w-16",
+            i !== steps - 1 ? "opacity-50" : "w-10 sm:w-16",
           )}
           key={i}
         ></div>

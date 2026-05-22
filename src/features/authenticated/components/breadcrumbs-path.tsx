@@ -6,7 +6,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { GraduationCap, Home, ScrollText, University } from "lucide-react";
 
 interface BreadcrumbItemProps {
@@ -15,7 +15,7 @@ interface BreadcrumbItemProps {
   icon: React.ReactNode;
 }
 
-export function BreadcrumbsPath() {
+export function BreadcrumbsPath({ steps = 2 }: { steps?: number }) {
   const breadcrumbsItems: BreadcrumbItemProps[] = [
     {
       name: "Dashboard",
@@ -38,9 +38,6 @@ export function BreadcrumbsPath() {
       icon: <GraduationCap className="size-4" />,
     },
   ];
-  const routeApi = getRouteApi("/_authenticated");
-
-  const { steps } = routeApi.useSearch();
 
   return (
     <Breadcrumb>
@@ -58,12 +55,12 @@ export function BreadcrumbsPath() {
                   {steps === val.step ? (
                     <BreadcrumbPage className="font-semibold flex flex-row items-center justify-center gap-x-2">
                       {val.icon}
-                      {val.name}
+                      <span className="hidden sm:inline">{val.name}</span>
                     </BreadcrumbPage>
                   ) : (
                     <BreadcrumbLink className="flex flex-row items-center justify-center gap-x-2">
                       {val.icon}
-                      {val.name}
+                      <span className="hidden sm:inline">{val.name}</span>
                     </BreadcrumbLink>
                   )}
                 </Link>
