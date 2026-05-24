@@ -6,11 +6,15 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Link } from "@tanstack/react-router";
+import { getRouteApi, Link } from "@tanstack/react-router";
 import { breadcrumbsItems } from "../utils/breadrumbs-items";
 import * as React from "react";
 
 export function BreadcrumbsPath({ steps = 2 }: { steps?: number }) {
+  const routeApi = getRouteApi("/_authenticated/");
+
+  const { visiMisi } = routeApi.useSearch();
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -34,6 +38,7 @@ export function BreadcrumbsPath({ steps = 2 }: { steps?: number }) {
                       to="/"
                       search={{
                         steps: val.step,
+                        visiMisi,
                       }}
                     >
                       {val.icon}

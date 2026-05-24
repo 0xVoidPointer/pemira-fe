@@ -11,7 +11,7 @@ import { VisiMisi } from "#/features/authenticated/components/visi-misi";
 
 const authenticatedSearchSchema = z.object({
   steps: z.number().min(2).max(5).catch(2),
-  visiMisi: z.enum(["PRESIDENT", "DPM", "FACULTY_GOVERNOR"]).catch("DPM"), 
+  visiMisi: z.enum(["PRESIDENT", "DPM", "FACULTY_GOVERNOR"]).catch("DPM"),
 });
 
 export const Route = createFileRoute("/_authenticated/")({
