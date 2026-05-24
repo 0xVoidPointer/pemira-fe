@@ -7,9 +7,11 @@ import { Dashboard } from "#/features/authenticated/components/dashboard";
 import { Button } from "#/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { JSX } from "react";
+import { VisiMisi } from "#/features/authenticated/components/visi-misi";
 
 const authenticatedSearchSchema = z.object({
   steps: z.number().min(2).max(5).catch(2),
+  visiMisi: z.enum(["PRESIDENT", "DPM", "FACULTY_GOVERNOR"]).catch("DPM"), 
 });
 
 export const Route = createFileRoute("/_authenticated/")({
@@ -18,17 +20,17 @@ export const Route = createFileRoute("/_authenticated/")({
 });
 
 function RouteComponent() {
-  const { steps } = Route.useSearch();
-
-  const nextMapper = breadcrumbsItems.map(({ name, step }) => ({ name, step }));
+  const { steps, visiMisi } = Route.useSearch();
 
   const pageChanger: Record<number, JSX.Element> = {
     2: <Dashboard />,
-    3: <p>test</p>,
+    3: <VisiMisi />,
     4: <p>test 2</p>,
     5: <p>test 3</p>,
     6: <p>test 4</p>,
   };
+
+  const nextMapper = breadcrumbsItems.map(({ name, step }) => ({ name, step }));
 
   return (
     <main className="min-h-dvh flex flex-col">
@@ -41,9 +43,11 @@ function RouteComponent() {
         {pageChanger[steps]}
         <Link
           to="/"
-          search={{
+          search={(prev) => ({
+            ...prev,
             steps: steps + 1,
-          }}
+            visiMisi: visiMisi,
+          })}
         >
           <Button
             size={"lg"}
