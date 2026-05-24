@@ -1,5 +1,3 @@
-import { Badge } from "#/components/ui/badge";
-import { getRouteApi, Link } from "@tanstack/react-router";
 import { Users } from "lucide-react";
 import { BadgeVisiMisi } from "./badge-visimisi";
 import { CalonCard } from "./calon-card";
@@ -11,9 +9,9 @@ import { CalonCard } from "./calon-card";
  * passing categorynya ke componen tsb, nnti disana fetching lagi
  */
 export function VisiMisi() {
-  const routeApi = getRouteApi("/_authenticated/");
+  // const routeApi = getRouteApi("/_authenticated/");
 
-  const { visiMisi } = routeApi.useSearch();
+  // const { visiMisi } = routeApi.useSearch();
 
   return (
     <main className="animate-fade-right animate-once animate-ease-in-out animate-normal animate-fill-forwards flex flex-col gap-y-6">
