@@ -35,7 +35,7 @@ export function Dashboard() {
   return (
     <main className="animate-fade animate-once animate-ease-in-out animate-normal animate-fill-forwards">
       <GreetingPill />
-      <section className="flex flex-1 flex-col gap-y-10 my-8">
+      <section className="flex flex-1 flex-col gap-y-10 mt-8">
         <div className="space-y-4">
           <StatistikPemilihan variant="outline" className="mt-0" />
         </div>

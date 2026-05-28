@@ -1,13 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import z from "zod";
 import { Navbar } from "#/components/ui/navbar";
 import { Stepper } from "#/components/ui/stepper";
-import { breadcrumbsItems, BreadcrumbsPath } from "#/features/authenticated";
+import { BreadcrumbsPath, FooterUser } from "#/features/authenticated";
 import { Dashboard } from "#/features/authenticated/components/dashboard";
-import { Button } from "#/components/ui/button";
-import { ChevronRight } from "lucide-react";
 import { JSX } from "react";
 import { VisiMisi } from "#/features/authenticated/components/visi-misi";
+import PemilihanUniversitas from "#/features/authenticated/components/pemilihan-universitas";
+import PemilihanFakultas from "#/features/authenticated/components/pemilihan-fakultas";
 
 const authenticatedSearchSchema = z.object({
   steps: z.number().min(2).max(5).catch(2),
@@ -25,12 +25,9 @@ function RouteComponent() {
   const pageChanger: Record<number, JSX.Element> = {
     2: <Dashboard />,
     3: <VisiMisi />,
-    4: <p>test 2</p>,
-    5: <p>test 3</p>,
-    6: <p>test 4</p>,
+    4: <PemilihanUniversitas />,
+    5: <PemilihanFakultas />,
   };
-
-  const nextMapper = breadcrumbsItems.map(({ name, step }) => ({ name, step }));
 
   return (
     <main className="min-h-dvh flex flex-col">
@@ -41,24 +38,7 @@ function RouteComponent() {
       </section>
       <section className="w-full h-full flex-1 flex flex-col px-4 py-6 md:px-8 justify-between">
         {pageChanger[steps]}
-        <Link
-          to="/"
-          search={(prev) => ({
-            ...prev,
-            steps: steps + 1,
-            visiMisi: visiMisi,
-          })}
-        >
-          <Button
-            size={"lg"}
-            className="flex flex-row gap-x-2 items-center justify-center w-full"
-          >
-            {steps + 1 === 6
-              ? "TODO: Implement Last Page"
-              : `Lanjutkan ke ${nextMapper[steps - 1]?.name}`}
-            <ChevronRight />
-          </Button>
-        </Link>
+        <FooterUser steps={steps} visiMisi={visiMisi} />
       </section>
     </main>
   );
