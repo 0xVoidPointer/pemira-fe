@@ -1,4 +1,4 @@
-import { IdCard, Lock, Shield, User } from "lucide-react";
+import { IdCard, Loader2, Lock, Shield, User } from "lucide-react";
 import { Separator } from "#/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -8,7 +8,14 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { GoogleLoginButton } from "./google-login-button";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { useAuthStore } from "#/stores/auth-store";
+import { LoginRequestStudentSchema } from "../api/schema";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { studentLogin } from "../api/api";
+import { HTTPError } from "ky";
 
 export function LoginForm() {
   const routeApi = getRouteApi("/_guest/auth");
@@ -20,6 +27,53 @@ export function LoginForm() {
     panitia: { label: "Panitia", icon: Shield },
   } as const;
 
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+  const setSession = useAuthStore((s) => s.setSession);
+
+  const loginMutation = useMutation({
+    mutationFn: (data: { identifier: string; password: string }) =>
+      studentLogin(data),
+    onSuccess: (data) => {
+      setSession(data.token);
+      toast.success("Berhasil masuk");
+      navigate({ to: "/", search: { steps: 2, visiMisi: "DPM" } });
+    },
+    onError: async (err) => {
+      let message = "Tidak dapat menghubungi server.";
+      if (err instanceof HTTPError) {
+        try {
+          const body = (await err.response.clone().json()) as {
+            error?: string;
+            message?: string;
+          };
+          message = body.error ?? body.message ?? "Gagal masuk. Coba lagi.";
+        } catch {
+          message = "Gagal masuk. Coba lagi.";
+        }
+      }
+      toast.error(message);
+    },
+  });
+
+  function onSubmit(e: React.SubmitEvent) {
+    e.preventDefault();
+
+    const parsed = LoginRequestStudentSchema.safeParse({
+      identifier,
+      password,
+    });
+
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Input tidak valid.");
+      return;
+    }
+
+    loginMutation.mutate(parsed.data);
+  }
+
   return (
     <section>
       <div className="my-8">
@@ -28,7 +82,7 @@ export function LoginForm() {
           Portal Pemilihan Raya Universitas Dian Nuswantoro
         </p>
       </div>
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-6">
           <Field>
             <FieldLabel htmlFor={loginAs === "mahasiswa" ? "nim" : "username"}>
@@ -39,10 +93,15 @@ export function LoginForm() {
             <InputGroup>
               <InputGroupInput
                 id={loginAs === "mahasiswa" ? "nim" : "username"}
+                type="text"
                 placeholder={
                   loginAs === "mahasiswa" ? "A11.2023.16000" : "Dimas Arifin"
                 }
                 required
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
+                autoComplete="username"
+                disabled={loginMutation.isPending}
               />
               <InputGroupAddon align="inline-start">
                 <IdCard className="text-muted-foreground" />
@@ -58,6 +117,10 @@ export function LoginForm() {
                 type="password"
                 placeholder="••••••••••"
                 required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                disabled={loginMutation.isPending}
               />
               <InputGroupAddon align="inline-start">
                 <Lock className="text-muted-foreground" />
@@ -86,8 +149,19 @@ export function LoginForm() {
             ))}
           </div>
 
-          <Button type="submit" className="w-full">
-            Masuk
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={loginMutation.isPending || loginAs !== "mahasiswa"}
+          >
+            {loginMutation.isPending ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                Memproses...
+              </>
+            ) : (
+              "Masuk"
+            )}
           </Button>
         </div>
       </form>
