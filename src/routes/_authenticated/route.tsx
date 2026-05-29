@@ -4,15 +4,24 @@
  * [admin/superadmin] = dashboard admin
  */
 
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { useAuthStore } from "#/stores/auth-store";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 
 /**
  * Handling JWT shit and stuff disini
  */
 export const Route = createFileRoute("/_authenticated")({
   component: RouteComponent,
-  beforeLoad: async () => {
-    console.log("oi dari route.tsx");
+  beforeLoad: () => {
+    const { token } = useAuthStore.getState();
+    if (!token) {
+      throw redirect({
+        to: "/auth",
+        search: {
+          loginAs: "mahasiswa",
+        },
+      });
+    }
   },
 });
 

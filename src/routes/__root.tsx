@@ -1,7 +1,14 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import type { QueryClient } from "@tanstack/react-query";
-import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
+import { useQueryClient, type QueryClient } from "@tanstack/react-query";
+import {
+  createRootRouteWithContext,
+  Outlet,
+  useRouter,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { useEffect } from "react";
+import { useAuthStore } from "#/stores/auth-store";
+import { Toaster } from "sonner";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
 interface MyRouterContext {
@@ -13,8 +20,22 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 });
 
 function RootComponent() {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsub = useAuthStore.subscribe((state, prev) => {
+      if (prev.token && !state.token) {
+        queryClient.clear();
+        router.navigate({ to: "/auth", search: { loginAs: "mahasiswa" } });
+      }
+    });
+    return unsub;
+  }, [queryClient, router]);
+
   return (
     <>
+      <Toaster position="top-center" richColors closeButton />
       <Outlet />
       <TanStackDevtools
         config={{
