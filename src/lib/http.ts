@@ -1,16 +1,14 @@
 import ky from "ky";
 import { env } from "#/env";
-import { useAuthStore } from "#/stores/auth-store";
 
 export const http = ky.create({
   baseUrl: env.VITE_API_URL,
-  timeout: 15000,
+  credentials: "include",
+  timeout: 15_000,
   retry: 0,
   hooks: {
     beforeRequest: [
       ({ request }) => {
-        const { token } = useAuthStore.getState();
-        if (token) request.headers.set("Authorization", `Bearer ${token}`);
         request.headers.set("Accept", "application/json");
       },
     ],
@@ -23,7 +21,7 @@ export const http = ky.create({
         ) {
           return response;
         }
-        useAuthStore.getState().clear();
+        window.dispatchEvent(new CustomEvent("auth:expired"));
         return response;
       },
     ],

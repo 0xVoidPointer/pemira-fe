@@ -1,8 +1,12 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  isRedirect,
+  redirect,
+} from "@tanstack/react-router";
 import { LoginForm, AuthHero, FooterStat } from "#/features/auth";
 import { Stepper } from "#/components/ui/stepper";
 import { Navbar } from "#/components/ui/navbar";
-import { useAuthStore } from "#/stores/auth-store";
+import { authKeys } from "#/features/auth/api/keys";
 import z from "zod";
 
 const authSearchSchema = z.object({
@@ -12,13 +16,18 @@ const authSearchSchema = z.object({
 export const Route = createFileRoute("/_guest/auth")({
   component: RouteComponent,
   validateSearch: authSearchSchema,
-  beforeLoad: () => {
-    const { token } = useAuthStore.getState();
-    if (token) {
+  loader: async ({ context }) => {
+    try {
+      await context.queryClient.ensureQueryData({
+        ...authKeys.session,
+        staleTime: Infinity,
+      });
       throw redirect({
         to: "/",
         search: { steps: 2, visiMisi: "DPM" },
       });
+    } catch (err) {
+      if (isRedirect(err)) throw err;
     }
   },
 });

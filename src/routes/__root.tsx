@@ -7,8 +7,8 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { useEffect } from "react";
-import { useAuthStore } from "#/stores/auth-store";
-import { Toaster } from "sonner";
+import { Toaster, toast } from "sonner";
+import { authKeys } from "#/features/auth/api/keys";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 
 interface MyRouterContext {
@@ -24,13 +24,16 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
-    const unsub = useAuthStore.subscribe((state, prev) => {
-      if (prev.token && !state.token) {
-        queryClient.clear();
-        router.navigate({ to: "/auth", search: { loginAs: "mahasiswa" } });
-      }
-    });
-    return unsub;
+    const handler = () => {
+      if (router.state.location.pathname.startsWith("/auth")) return;
+      queryClient.removeQueries({ queryKey: authKeys.session.queryKey });
+      toast.error("Sesi telah berakhir. Silakan masuk kembali.", {
+        id: "auth-expired",
+      });
+      router.navigate({ to: "/auth", search: { loginAs: "mahasiswa" } });
+    };
+    window.addEventListener("auth:expired", handler);
+    return () => window.removeEventListener("auth:expired", handler);
   }, [queryClient, router]);
 
   return (

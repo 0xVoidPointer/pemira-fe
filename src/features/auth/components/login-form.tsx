@@ -10,10 +10,9 @@ import {
 import { GoogleLoginButton } from "./google-login-button";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { useAuthStore } from "#/stores/auth-store";
 import { LoginRequestStudentSchema } from "../api/schema";
 import { toast } from "sonner";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { studentLogin } from "../api/api";
 import { HTTPError } from "ky";
 
@@ -31,13 +30,13 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  const setSession = useAuthStore((s) => s.setSession);
+  const queryClient = useQueryClient();
 
   const loginMutation = useMutation({
     mutationFn: (data: { identifier: string; password: string }) =>
       studentLogin(data),
-    onSuccess: (data) => {
-      setSession(data.token);
+    onSuccess: () => {
+      queryClient.invalidateQueries();
       toast.success("Berhasil masuk");
       navigate({ to: "/", search: { steps: 2, visiMisi: "DPM" } });
     },
@@ -58,7 +57,7 @@ export function LoginForm() {
     },
   });
 
-  function onSubmit(e: React.SubmitEvent) {
+  function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const parsed = LoginRequestStudentSchema.safeParse({
