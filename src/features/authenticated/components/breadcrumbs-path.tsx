@@ -40,6 +40,7 @@ export function BreadcrumbsPath({ steps = 2 }: { steps?: number }) {
                         steps: val.step,
                         visiMisi,
                       }}
+                      resetScroll={false}
                     >
                       {val.icon}
                       <span className="hidden sm:inline">{val.name}</span>

@@ -30,16 +30,20 @@ function RouteComponent() {
   };
 
   return (
-    <main className="min-h-dvh flex flex-col">
-      <Navbar />
-      <section className="border-b-2 py-4 px-4 md:px-8 flex flex-row justify-between items-center">
-        <BreadcrumbsPath steps={steps} />
-        <Stepper steps={steps} />
-      </section>
-      <section className="w-full h-full flex-1 flex flex-col px-4 py-6 md:px-8 justify-between">
+    <main className="h-dvh flex flex-col overflow-hidden">
+      <header className="flex-none">
+        <Navbar />
+        <section className="border-b-2 py-4 px-4 md:px-8 flex flex-row justify-between items-center">
+          <BreadcrumbsPath steps={steps} />
+          <Stepper steps={steps} />
+        </section>
+      </header>
+      <section className="w-full flex-1 overflow-y-auto px-4 py-6 md:px-8">
         {pageChanger[steps]}
-        <FooterUser steps={steps} visiMisi={visiMisi} />
       </section>
+      <footer className="flex-none">
+        <FooterUser steps={steps} visiMisi={visiMisi} />
+      </footer>
     </main>
   );
 }

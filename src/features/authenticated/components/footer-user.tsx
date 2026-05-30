@@ -1,58 +1,50 @@
 import { Link } from "@tanstack/react-router";
-import { Button } from "#/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { breadcrumbsItems } from "../utils/breadrumbs-items";
+import { Button } from "#/components/ui/button";
+import { cn } from "#/lib/utils";
+import { getNext, getPrev, type VisiMisi } from "../utils/footer-nav";
 
 interface FooterUserProps {
   steps: number;
-  visiMisi: "PRESIDENT" | "DPM" | "FACULTY_GOVERNOR";
+  visiMisi: VisiMisi;
 }
 
 export function FooterUser({ steps, visiMisi }: FooterUserProps) {
-  const nextMapper = breadcrumbsItems.map(({ name, step }) => ({ name, step }));
-  const isLastStep = steps + 1 === 6;
+  const next = getNext(steps, visiMisi);
+  const prev = getPrev(steps, visiMisi);
 
   return (
-    <div className="flex flex-row gap-x-4 items-center justify-between">
-      {steps > 2 ? (
+    <div
+      className={cn(
+        "flex flex-row justify-between gap-x-3 md:gap-x-4 items-center w-full px-4 py-6 md:px-8 border-t bg-background",
+        "pb-[max(env(safe-area-inset-bottom),1.5rem)]",
+      )}
+    >
+      {prev && (
         <Link
-          className="w-full"
-          to="/"
-          search={(prev) => ({
-            ...prev,
-            steps: steps - 1,
-            visiMisi: visiMisi,
-          })}
+          to={prev.to}
+          search={"search" in prev ? prev.search : undefined}
+          className="md:flex-1"
+          aria-label={prev.label}
+          resetScroll={false}
         >
-          <Button
-            variant={"outline"}
-            size={"lg"}
-            className="flex flex-row gap-x-2 items-center justify-center w-full mt-8"
-          >
+          <Button className="w-full" variant="outline" size="lg">
             <ChevronLeft />
-            Kembali
+            <span className="hidden md:inline truncate">{prev.label}</span>
           </Button>
         </Link>
-      ) : null}
+      )}
       <Link
-        className="w-full"
-        to={isLastStep ? "/" : "/"}
-        // @ts-expect-error - search is required for to="/" but not for to="/selesai"
-        search={
-          isLastStep
-            ? undefined
-            : (prev: Record<string, unknown>) => ({
-                ...prev,
-                steps: steps + 1,
-                visiMisi: visiMisi,
-              })
-        }
+        to={next.to}
+        search={"search" in next ? next.search : undefined}
+        className="flex-1"
+        resetScroll={false}
       >
         <Button
-          size={"lg"}
-          className="flex flex-row gap-x-2 items-center justify-center w-full mt-8 truncate"
+          size="lg"
+          className="flex flex-row gap-x-2 items-center justify-center w-full truncate"
         >
-          {isLastStep ? "Selesai" : `${nextMapper[steps - 1]?.name}`}
+          <span className="truncate">{next.label}</span>
           <ChevronRight />
         </Button>
       </Link>
