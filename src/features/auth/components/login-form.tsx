@@ -10,7 +10,7 @@ import {
 import { GoogleLoginButton } from "./google-login-button";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { LoginRequestStudentSchema } from "#/services/auth/schema";
+import { zLoginRequestStudent } from "#/services/_generated/schema";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { studentLogin } from "#/services/auth/api";
@@ -60,7 +60,7 @@ export function LoginForm() {
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const parsed = LoginRequestStudentSchema.safeParse({
+    const parsed = zLoginRequestStudent.safeParse({
       identifier,
       password,
     });
