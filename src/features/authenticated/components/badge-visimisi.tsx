@@ -15,6 +15,7 @@ export function BadgeVisiMisi() {
     <div className="flex flex-row gap-2 flex-wrap">
       {VISI_MISI_ITEMS.map((item) => (
         <Badge
+          key={item.value}
           variant={visiMisi === item.value ? "default" : "outline"}
           className="md:h-8 cursor-pointer px-4"
         >
