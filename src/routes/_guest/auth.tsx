@@ -6,7 +6,7 @@ import {
 import { LoginForm, AuthHero, FooterStat } from "#/features/auth";
 import { Stepper } from "#/components/ui/stepper";
 import { Navbar } from "#/components/ui/navbar";
-import { authKeys } from "#/features/auth/api/keys";
+import { authKeys } from "#/services/auth/keys";
 import z from "zod";
 
 const authSearchSchema = z.object({

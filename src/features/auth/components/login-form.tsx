@@ -10,10 +10,10 @@ import {
 import { GoogleLoginButton } from "./google-login-button";
 import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { LoginRequestStudentSchema } from "../api/schema";
+import { LoginRequestStudentSchema } from "#/services/auth/schema";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { studentLogin } from "../api/api";
+import { studentLogin } from "#/services/auth/api";
 import { HTTPError } from "ky";
 
 export function LoginForm() {
