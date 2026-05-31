@@ -8,10 +8,11 @@ import { JSX } from "react";
 import { VisiMisi } from "#/features/authenticated/components/visi-misi";
 import PemilihanUniversitas from "#/features/authenticated/components/pemilihan-universitas";
 import PemilihanFakultas from "#/features/authenticated/components/pemilihan-fakultas";
+import { zElectionCategoryType } from "#/services/_generated/schema";
 
 const authenticatedSearchSchema = z.object({
   steps: z.number().min(2).max(5).catch(2),
-  visiMisi: z.enum(["PRESIDENT", "DPM", "FACULTY_GOVERNOR"]).catch("DPM"),
+  visiMisi: zElectionCategoryType.catch("DPM"),
 });
 
 export const Route = createFileRoute("/_authenticated/")({

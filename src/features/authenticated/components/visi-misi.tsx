@@ -1,6 +1,7 @@
 import { Users } from "lucide-react";
 import { BadgeVisiMisi } from "./badge-visimisi";
 import { CalonCard } from "./calon-card";
+import { getRouteApi } from "@tanstack/react-router";
 
 /**
  * 1. fetch /api/election/active-period/categories
@@ -9,9 +10,9 @@ import { CalonCard } from "./calon-card";
  * passing categorynya ke componen tsb, nnti disana fetching lagi
  */
 export function VisiMisi() {
-  // const routeApi = getRouteApi("/_authenticated/");
+  const routeApi = getRouteApi("/_authenticated/");
 
-  // const { visiMisi } = routeApi.useSearch();
+  const { visiMisi } = routeApi.useSearch();
 
   return (
     <main className="animate-fade-right animate-once animate-ease-in-out animate-normal animate-fill-forwards flex flex-col gap-y-6">
@@ -26,8 +27,8 @@ export function VisiMisi() {
           </p>
         </div>
       </div>
-      <BadgeVisiMisi />
-      <CalonCard />
+      <BadgeVisiMisi electionCategory={visiMisi} />
+      <CalonCard electionCategory={visiMisi} />
     </main>
   );
 }
