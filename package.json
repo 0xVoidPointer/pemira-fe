@@ -18,18 +18,18 @@
     "@t3-oss/env-core": "^0.13.11",
     "@tailwindcss/vite": "^4.3.0",
     "@tanstack/react-devtools": "^0.10.5",
-    "@tanstack/react-query": "latest",
-    "@tanstack/react-query-devtools": "latest",
-    "@tanstack/react-router": "latest",
+    "@tanstack/react-query": "5.101.0",
+    "@tanstack/react-query-devtools": "5.101.0",
+    "@tanstack/react-router": "1.170.11",
     "@tanstack/react-router-devtools": "latest",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "ky": "^2.0.2",
-    "lucide-react": "^1.16.0",
+    "lucide-react": "^1.17.0",
     "ogl": "^1.0.11",
     "radix-ui": "^1.4.3",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0",
     "tailwindcss": "^4.3.0",
@@ -39,14 +39,14 @@
     "zustand": "^5.0.14"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.15",
+    "@biomejs/biome": "2.4.16",
     "@tailwindcss/typography": "^0.5.19",
-    "@tanstack/router-plugin": "latest",
+    "@tanstack/router-plugin": "1.168.14",
     "@types/node": "^25.9.1",
-    "@types/react": "^19.2.15",
+    "@types/react": "^19.2.16",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14"
+    "vite": "^8.0.16"
   }
 }
