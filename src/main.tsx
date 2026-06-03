@@ -9,13 +9,11 @@ const router = getRouter();
 
 const rootElement = document.getElementById("root")!;
 
-if (!rootElement.innerHTML) {
-	const root = ReactDOM.createRoot(rootElement);
-	root.render(
-		<React.StrictMode>
-			<QueryClientProvider client={router.options.context.queryClient}>
-				<RouterProvider router={router} />
-			</QueryClientProvider>
-		</React.StrictMode>,
-	);
-}
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+	<React.StrictMode>
+		<QueryClientProvider client={router.options.context.queryClient}>
+			<RouterProvider router={router} />
+		</QueryClientProvider>
+	</React.StrictMode>,
+);
