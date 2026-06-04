@@ -1,4 +1,4 @@
-import { IdCard, Loader2, Lock, Shield, User } from "lucide-react";
+import { Eye, EyeOff, IdCard, Loader2, Lock, Shield, User } from "lucide-react";
 import { Separator } from "#/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -28,6 +28,7 @@ export function LoginForm() {
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -113,7 +114,7 @@ export function LoginForm() {
             <InputGroup>
               <InputGroupInput
                 id="password"
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 placeholder="••••••••••"
                 required
                 value={password}
@@ -123,6 +124,17 @@ export function LoginForm() {
               />
               <InputGroupAddon align="inline-start">
                 <Lock className="text-muted-foreground" />
+              </InputGroupAddon>
+              <InputGroupAddon
+                align="inline-end"
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                className="cursor-pointer"
+              >
+                {isPasswordVisible ? (
+                  <EyeOff className="text-muted-foreground" />
+                ) : (
+                  <Eye className="text-muted-foreground" />
+                )}
               </InputGroupAddon>
             </InputGroup>
           </Field>
