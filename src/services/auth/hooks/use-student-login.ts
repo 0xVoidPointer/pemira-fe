@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { LoginRequestStudent, studentLogin } from "../api";
 import { useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { HTTPError } from "ky";
 
 export function useStudentLogin() {
   const navigate = useNavigate();
@@ -15,19 +14,16 @@ export function useStudentLogin() {
       toast.success("Berhasil masuk");
       navigate({ to: "/", search: { steps: 2, visiMisi: "DPM" } });
     },
-    onError: async (err) => {
+    onError: (err: any) => {
       let message = "Tidak dapat menghubungi server.";
-      if (err instanceof HTTPError) {
-        try {
-          const body = (await err.response.clone().json()) as {
-            error?: string;
-            message?: string;
-          };
-          message = body.error ?? body.message ?? "Gagal masuk. Coba lagi.";
-        } catch {
-          message = "Gagal masuk. Coba lagi.";
-        }
+      const errorBody = err.response?.errorBody;
+
+      if (errorBody) {
+        message = errorBody.error ?? "Gagal masuk. Coba lagi.";
+      } else if (err.message) {
+        message = err.message;
       }
+
       toast.error(message);
     },
   });

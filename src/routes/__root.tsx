@@ -30,7 +30,7 @@ function RootComponent() {
       toast.error("Sesi telah berakhir. Silakan masuk kembali.", {
         id: "auth-expired",
       });
-      router.navigate({ to: "/auth", search: { loginAs: "mahasiswa" } });
+      router.navigate({ to: "/auth" });
     };
     window.addEventListener("auth:expired", handler);
     return () => window.removeEventListener("auth:expired", handler);

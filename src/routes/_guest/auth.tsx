@@ -7,15 +7,9 @@ import { LoginForm, AuthHero, FooterStat } from "#/features/auth";
 import { Stepper } from "#/components/ui/stepper";
 import { Navbar } from "#/components/ui/navbar";
 import { authKeys } from "#/services/auth/keys";
-import z from "zod";
-
-const authSearchSchema = z.object({
-  loginAs: z.enum(["mahasiswa", "panitia"]).catch("mahasiswa"),
-});
 
 export const Route = createFileRoute("/_guest/auth")({
   component: RouteComponent,
-  validateSearch: authSearchSchema,
   loader: async ({ context }) => {
     try {
       await context.queryClient.ensureQueryData({

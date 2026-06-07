@@ -1,4 +1,4 @@
-import { Eye, EyeOff, IdCard, Loader2, Lock, Shield, User } from "lucide-react";
+import { Eye, EyeOff, IdCard, Loader2, Lock } from "lucide-react";
 import { Separator } from "#/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
@@ -8,22 +8,12 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { GoogleLoginButton } from "./google-login-button";
-import { getRouteApi, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { zLoginRequestStudent } from "#/services/_generated/schema";
 import { toast } from "sonner";
 import { useStudentLogin } from "#/services/auth/hooks/use-student-login";
 
 export function LoginForm() {
-  const routeApi = getRouteApi("/_guest/auth");
-
-  const { loginAs } = routeApi.useSearch();
-
-  const roles = {
-    mahasiswa: { label: "Mahasiswa", icon: User },
-    panitia: { label: "Panitia", icon: Shield },
-  } as const;
-
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -57,18 +47,13 @@ export function LoginForm() {
       <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-6">
           <Field>
-            <FieldLabel htmlFor={loginAs === "mahasiswa" ? "nim" : "username"}>
-              {loginAs === "mahasiswa"
-                ? "Nomor Induk Mahasiswa (NIM)"
-                : "Username"}
-            </FieldLabel>
+            <FieldLabel htmlFor="nim">Nomor Induk Mahasiswa (NIM)</FieldLabel>
             <InputGroup>
               <InputGroupInput
-                id={loginAs === "mahasiswa" ? "nim" : "username"}
+                id="nim"
+                name="nim"
                 type="text"
-                placeholder={
-                  loginAs === "mahasiswa" ? "A11.2023.16000" : "Dimas Arifin"
-                }
+                placeholder={"A11.2023.16000"}
                 required
                 value={identifier}
                 onChange={(e) => setIdentifier(e.target.value)}
@@ -86,6 +71,7 @@ export function LoginForm() {
             <InputGroup>
               <InputGroupInput
                 id="password"
+                name="password"
                 type={isPasswordVisible ? "text" : "password"}
                 placeholder="••••••••••"
                 required
@@ -111,31 +97,10 @@ export function LoginForm() {
             </InputGroup>
           </Field>
 
-          <div className="flex flex-row gap-x-4 justify-between">
-            {Object.entries(roles).map(([id, { label, icon: Icon }]) => (
-              <Button
-                key={id}
-                asChild
-                variant={loginAs === id ? "default" : "outline"}
-                className="flex-1 flex-row"
-              >
-                <Link
-                  to="/auth"
-                  search={{
-                    loginAs: id as keyof typeof roles,
-                  }}
-                >
-                  <Icon />
-                  <span>{label}</span>
-                </Link>
-              </Button>
-            ))}
-          </div>
-
           <Button
             type="submit"
             className="w-full"
-            disabled={loginMutation.isPending || loginAs !== "mahasiswa"}
+            disabled={loginMutation.isPending}
           >
             {loginMutation.isPending ? (
               <>
@@ -149,21 +114,17 @@ export function LoginForm() {
         </div>
       </form>
 
-      {loginAs === "mahasiswa" ? (
-        <>
-          <div className="relative w-full my-8">
-            <div className="absolute inset-0 flex items-center">
-              <Separator />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">
-                Atau Masuk Dengan
-              </span>
-            </div>
-          </div>
-          <GoogleLoginButton />
-        </>
-      ) : null}
+      <div className="relative w-full my-8">
+        <div className="absolute inset-0 flex items-center">
+          <Separator />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-card px-2 text-muted-foreground">
+            Atau Masuk Dengan
+          </span>
+        </div>
+      </div>
+      <GoogleLoginButton />
     </section>
   );
 }
