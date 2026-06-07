@@ -8,13 +8,11 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { GoogleLoginButton } from "./google-login-button";
-import { getRouteApi, Link, useNavigate } from "@tanstack/react-router";
+import { getRouteApi, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { zLoginRequestStudent } from "#/services/_generated/schema";
 import { toast } from "sonner";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { studentLogin } from "#/services/auth/api";
-import { HTTPError } from "ky";
+import { useStudentLogin } from "#/services/auth/hooks/use-student-login";
 
 export function LoginForm() {
   const routeApi = getRouteApi("/_guest/auth");
@@ -30,33 +28,7 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const loginMutation = useMutation({
-    mutationFn: (data: { identifier: string; password: string }) =>
-      studentLogin(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries();
-      toast.success("Berhasil masuk");
-      navigate({ to: "/", search: { steps: 2, visiMisi: "DPM" } });
-    },
-    onError: async (err) => {
-      let message = "Tidak dapat menghubungi server.";
-      if (err instanceof HTTPError) {
-        try {
-          const body = (await err.response.clone().json()) as {
-            error?: string;
-            message?: string;
-          };
-          message = body.error ?? body.message ?? "Gagal masuk. Coba lagi.";
-        } catch {
-          message = "Gagal masuk. Coba lagi.";
-        }
-      }
-      toast.error(message);
-    },
-  });
+  const loginMutation = useStudentLogin();
 
   function onSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
