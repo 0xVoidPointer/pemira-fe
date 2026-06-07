@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useVoteStore } from "@/stores/use-vote-store";
 import { useCandidates, useSubmitVotes } from "@/services/election";
+import { toast } from "sonner";
 
 interface ConfirmVoteDialogProps {
   label: string;
@@ -75,6 +76,7 @@ export function ConfirmVoteDialog({ label }: ConfirmVoteDialogProps) {
       onSuccess: () => {
         reset();
         navigate({ to: "/selesai" });
+        toast.success("Pemilihan berhasil diselesaikan.");
       },
     });
   };
@@ -128,28 +130,29 @@ export function ConfirmVoteDialog({ label }: ConfirmVoteDialogProps) {
                     Belum ada pilihan yang diambil.
                   </p>
                 )}
+              </div>
+              {summary.length < 3 && (
+                <p className="text-xs text-destructive font-medium bg-destructive/10 p-3 rounded-md border border-destructive/20">
+                  Mohon lengkapi semua pilihan (3/3) sebelum mengirim. Pastikan
+                  Anda telah memilih kandidat untuk semua kategori yang
+                  tersedia.
+                </p>
+              )}
             </div>
-            {summary.length < 3 && (
-              <p className="text-xs text-destructive font-medium bg-destructive/10 p-3 rounded-md border border-destructive/20">
-                Mohon lengkapi semua pilihan (3/3) sebelum mengirim. Pastikan
-                Anda telah memilih kandidat untuk semua kategori yang tersedia.
-              </p>
-            )}
-          </div>
-        </AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel disabled={isPending}>Batal</AlertDialogCancel>
-        <AlertDialogAction
-          onClick={(e) => {
-            e.preventDefault();
-            handleSubmit();
-          }}
-          disabled={isPending || summary.length < 3}
-        >
-          {isPending ? "Mengirim..." : "Ya, Kirim Pilihan"}
-        </AlertDialogAction>
-      </AlertDialogFooter>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel disabled={isPending}>Batal</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={(e) => {
+              e.preventDefault();
+              handleSubmit();
+            }}
+            disabled={isPending || summary.length < 3}
+          >
+            {isPending ? "Mengirim..." : "Ya, Kirim Pilihan"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
