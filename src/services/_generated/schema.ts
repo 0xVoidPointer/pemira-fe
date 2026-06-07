@@ -35,10 +35,6 @@ export const zElectionPeriod = z.object({
   name: z.string().optional(),
   year: z.int().optional(),
   theme_config: z.record(z.string(), z.unknown()).nullish(),
-  reg_start_at: z.iso.datetime().optional(),
-  reg_end_at: z.iso.datetime().optional(),
-  vote_start_at: z.iso.datetime().optional(),
-  vote_end_at: z.iso.datetime().optional(),
   status: zPeriodStatus.optional(),
   created_by: z.uuid().nullish(),
   created_at: z.iso.datetime().optional(),
@@ -52,9 +48,17 @@ export const zElectionCategory = z.object({
   type: zElectionCategoryType.optional(),
   title: z.string().optional(),
   description: z.string().nullish(),
-  vote_start_at: z.iso.datetime().nullish(),
-  vote_end_at: z.iso.datetime().nullish(),
   max_winners: z.int().optional(),
+  created_at: z.iso.datetime().optional(),
+  updated_at: z.iso.datetime().optional(),
+});
+
+export const zElectionSchedule = z.object({
+  id: z.uuid().optional(),
+  period_id: z.uuid().optional(),
+  scope_faculty_id: z.uuid().optional(),
+  vote_start_at: z.iso.datetime().optional(),
+  vote_end_at: z.iso.datetime().optional(),
   created_at: z.iso.datetime().optional(),
   updated_at: z.iso.datetime().optional(),
 });
@@ -68,7 +72,8 @@ export const zCandidate = z.object({
   vision: z.string().optional(),
   mission: z.string().optional(),
   photo_url: z.string().nullish(),
-  video_url: z.string().nullish(),
+  photo_url_portrait: z.string().nullish(),
+  photo_url_landscape: z.string().nullish(),
   created_at: z.iso.datetime().optional(),
   updated_at: z.iso.datetime().optional(),
 });
@@ -123,6 +128,11 @@ export const zPostApiStudentAuthLogoutResponse = zMessageResponse;
  * Active election period
  */
 export const zGetApiElectionActivePeriodResponse = zElectionPeriod;
+
+/**
+ * Voting schedule for the student's faculty
+ */
+export const zGetApiElectionActivePeriodScheduleResponse = zElectionSchedule;
 
 export const zGetApiElectionActivePeriodCategoriesQuery = z.object({
   type: zElectionCategoryType.optional(),

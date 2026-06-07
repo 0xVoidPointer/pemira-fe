@@ -14,6 +14,19 @@ export const http = ky.create({
     ],
     afterResponse: [
       async ({ response, request }) => {
+        if (!response.ok) {
+          try {
+            const contentType = response.headers.get("content-type");
+            if (contentType?.includes("application/json")) {
+              (response as any).errorBody = await response.json();
+            } else {
+              (response as any).errorBody = { message: await response.text() };
+            }
+          } catch (e) {
+            console.error("Gagal membaca error body di interceptor:", e);
+          }
+        }
+
         if (response.status !== 401) return response;
         if (
           request.url.includes("/api/student/auth") &&
