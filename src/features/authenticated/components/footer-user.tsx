@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "#/components/ui/button";
 import { cn } from "#/lib/utils";
 import { getNext, getPrev, type VisiMisi } from "../utils/footer-nav";
+import { ConfirmVoteDialog } from "./confirm-vote-dialog";
 
 interface FooterUserProps {
   steps: number;
@@ -26,7 +27,7 @@ export function FooterUser({ steps, visiMisi }: FooterUserProps) {
           search={"search" in prev ? prev.search : undefined}
           className="md:flex-1"
           aria-label={prev.label}
-          resetScroll={false}
+          resetScroll={true}
         >
           <Button className="w-full" variant="outline" size="lg">
             <ChevronLeft />
@@ -34,20 +35,24 @@ export function FooterUser({ steps, visiMisi }: FooterUserProps) {
           </Button>
         </Link>
       )}
-      <Link
-        to={next.to}
-        search={"search" in next ? next.search : undefined}
-        className="flex-1"
-        resetScroll={false}
-      >
-        <Button
-          size="lg"
-          className="flex flex-row gap-x-2 items-center justify-center w-full truncate"
+      {steps === 5 ? (
+        <ConfirmVoteDialog label={next.label} />
+      ) : (
+        <Link
+          to={next.to}
+          search={"search" in next ? next.search : undefined}
+          className="flex-1"
+          resetScroll={true}
         >
-          <span className="truncate">{next.label}</span>
-          <ChevronRight />
-        </Button>
-      </Link>
+          <Button
+            size="lg"
+            className="flex flex-row gap-x-2 items-center justify-center w-full truncate"
+          >
+            <span className="truncate">{next.label}</span>
+            <ChevronRight />
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }

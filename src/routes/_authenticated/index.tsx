@@ -4,7 +4,7 @@ import { Navbar } from "#/components/ui/navbar";
 import { Stepper } from "#/components/ui/stepper";
 import { BreadcrumbsPath, FooterUser } from "#/features/authenticated";
 import { Dashboard } from "#/features/authenticated/components/dashboard";
-import { JSX } from "react";
+import { JSX, useEffect, useRef } from "react";
 import { VisiMisi } from "#/features/authenticated/components/visi-misi";
 import PemilihanUniversitas from "#/features/authenticated/components/pemilihan-universitas";
 import PemilihanFakultas from "#/features/authenticated/components/pemilihan-fakultas";
@@ -22,6 +22,13 @@ export const Route = createFileRoute("/_authenticated/")({
 
 function RouteComponent() {
   const { steps, visiMisi } = Route.useSearch();
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [steps, visiMisi]);
 
   const pageChanger: Record<number, JSX.Element> = {
     2: <Dashboard />,
@@ -39,7 +46,10 @@ function RouteComponent() {
           <Stepper steps={steps} />
         </section>
       </header>
-      <section className="w-full flex-1 overflow-y-auto px-4 py-6 md:px-8">
+      <section
+        ref={scrollContainerRef}
+        className="w-full flex-1 overflow-y-auto px-4 py-6 md:px-8"
+      >
         {pageChanger[steps]}
       </section>
       <footer className="flex-none">
