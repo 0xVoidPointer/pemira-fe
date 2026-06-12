@@ -10,12 +10,12 @@ export const Route = createFileRoute("/_authenticated/selesai/")({
 });
 
 function RouteComponent() {
-  const { mutate: logout } = useLogout();
+  const { mutateAsync: logout } = useLogout();
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(10);
 
-  const logOutHandler = useCallback(() => {
-    logout();
+  const logOutHandler = useCallback(async () => {
+    await logout();
     navigate({ to: "/auth" });
   }, [logout, navigate]);
 
