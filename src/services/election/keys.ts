@@ -3,6 +3,7 @@ import {
   getActivePeriod,
   getCandidates,
   getCategories,
+  votingSchedule,
   type ElectionCategoryType,
 } from "./api";
 
@@ -19,4 +20,8 @@ export const electionKeys = createQueryKeys("election", {
     queryKey: [type],
     queryFn: ({ signal }) => getCandidates(type, signal),
   }),
+  votingSchedule: {
+    queryKey: null,
+    queryFn: ({ signal }) => votingSchedule(signal),
+  },
 });

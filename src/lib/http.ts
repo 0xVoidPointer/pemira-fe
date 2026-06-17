@@ -2,7 +2,7 @@ import ky from "ky";
 import { env } from "#/env";
 
 export const http = ky.create({
-  baseUrl: env.VITE_API_URL,
+  prefix: env.VITE_API_URL,
   credentials: "include",
   timeout: 15_000,
   retry: 0,
@@ -14,27 +14,32 @@ export const http = ky.create({
     ],
     afterResponse: [
       async ({ response, request }) => {
+        const ERROR_CODES = [401, 404, 409];
+
+        if (
+          ERROR_CODES.includes(response.status) &&
+          !(
+            request.url.includes("/api/student/auth") &&
+            request.method === "POST"
+          )
+        ) {
+          window.dispatchEvent(new CustomEvent("auth:expired"));
+        }
+
         if (!response.ok) {
           try {
-            const contentType = response.headers.get("content-type");
+            const clone = response.clone();
+            const contentType = clone.headers.get("content-type");
             if (contentType?.includes("application/json")) {
-              (response as any).errorBody = await response.json();
+              (response as any).errorBody = await clone.json();
             } else {
-              (response as any).errorBody = { message: await response.text() };
+              (response as any).errorBody = { message: await clone.text() };
             }
-          } catch (e) {
-            console.error("Gagal membaca error body di interceptor:", e);
+          } catch {
+            (response as any).errorBody = { message: null };
           }
         }
 
-        if (response.status !== 401) return response;
-        if (
-          request.url.includes("/api/student/auth") &&
-          request.method === "POST"
-        ) {
-          return response;
-        }
-        window.dispatchEvent(new CustomEvent("auth:expired"));
         return response;
       },
     ],

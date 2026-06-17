@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.16",
-    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/typography": "^0.5.20",
     "@tanstack/router-plugin": "latest",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.16",

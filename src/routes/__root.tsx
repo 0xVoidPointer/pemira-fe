@@ -24,14 +24,24 @@ function RootComponent() {
   const router = useRouter();
 
   useEffect(() => {
+    let isHandling = false;
+
     const handler = () => {
+      if (isHandling) return;
       if (router.state.location.pathname.startsWith("/auth")) return;
+      isHandling = true;
       queryClient.removeQueries({ queryKey: authKeys.session.queryKey });
       toast.error("Sesi telah berakhir. Silakan masuk kembali.", {
         id: "auth-expired",
       });
-      router.navigate({ to: "/auth" });
+      setTimeout(() => {
+        router.navigate({ to: "/auth" });
+        setTimeout(() => {
+          isHandling = false;
+        }, 1000);
+      }, 200);
     };
+
     window.addEventListener("auth:expired", handler);
     return () => window.removeEventListener("auth:expired", handler);
   }, [queryClient, router]);

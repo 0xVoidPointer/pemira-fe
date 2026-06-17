@@ -5,6 +5,7 @@ import {
   zGetApiElectionActivePeriodCategoriesByTypeCandidatesResponse,
   zGetApiElectionActivePeriodCategoriesResponse,
   zGetApiElectionActivePeriodResponse,
+  zGetApiElectionActivePeriodScheduleResponse,
   zVoteRequest,
 } from "../_generated/schema";
 
@@ -57,4 +58,11 @@ export async function getCandidates(
 
 export async function submitVotes(input: VoteRequest): Promise<void> {
   await http.post("election/active-period/votes", { json: input });
+}
+
+export async function votingSchedule(signal?: AbortSignal) {
+  const json = await http.get("election/active-period/schedule", {
+    signal
+  }).json();
+  return zGetApiElectionActivePeriodScheduleResponse.parse(json);
 }

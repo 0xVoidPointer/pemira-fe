@@ -1,9 +1,5 @@
-import {
-  createFileRoute,
-  isRedirect,
-  redirect,
-} from "@tanstack/react-router";
-import { LoginForm, AuthHero, FooterStat } from "#/features/auth";
+import { createFileRoute, isRedirect, redirect } from "@tanstack/react-router";
+import { LoginForm, AuthHero } from "#/features/auth";
 import { Stepper } from "#/components/ui/stepper";
 import { Navbar } from "#/components/ui/navbar";
 import { authKeys } from "#/services/auth/keys";
@@ -38,7 +34,18 @@ function RouteComponent() {
         <div className="w-full h-full flex-1 flex flex-col justify-between py-12 md:px-12 px-8">
           <Stepper />
           <LoginForm />
-          <FooterStat />
+          <div className="flex items-center gap-4 rounded-xl border border-primary/10 bg-primary/4 p-5 mt-8 md:mt-0">
+            <div className="bg-primary w-[1%] rounded-full self-stretch" />
+            <div className="flex flex-col gap-2 flex-1">
+              <p className="text-[15px] font-medium leading-relaxed text-foreground/80 md:text-base text-justify">
+                Ayo kita sukseskan Pemilihan Umum Raya UDINUS dengan menggunakan
+                hak suara anda.
+              </p>
+              <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-primary/60">
+                Suara Rahasia — Hasil Nyata
+              </p>
+            </div>
+          </div>
         </div>
       </div>
       <div
