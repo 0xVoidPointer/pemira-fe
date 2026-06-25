@@ -12,9 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as GuestAuthRouteImport } from './routes/_guest/auth'
-import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/admin/route'
 import { Route as AuthenticatedSelesaiIndexRouteImport } from './routes/_authenticated/selesai/index'
-import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -30,57 +28,40 @@ const GuestAuthRoute = GuestAuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
 const AuthenticatedSelesaiIndexRoute =
   AuthenticatedSelesaiIndexRouteImport.update({
     id: '/selesai/',
     path: '/selesai/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AuthenticatedAdminRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
-  '/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/auth': typeof GuestAuthRoute
-  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/selesai/': typeof AuthenticatedSelesaiIndexRoute
 }
 export interface FileRoutesByTo {
   '/auth': typeof GuestAuthRoute
   '/': typeof AuthenticatedIndexRoute
-  '/admin': typeof AuthenticatedAdminIndexRoute
   '/selesai': typeof AuthenticatedSelesaiIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/_guest/auth': typeof GuestAuthRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
-  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/selesai/': typeof AuthenticatedSelesaiIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/admin' | '/auth' | '/admin/' | '/selesai/'
+  fullPaths: '/' | '/auth' | '/selesai/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/auth' | '/' | '/admin' | '/selesai'
+  to: '/auth' | '/' | '/selesai'
   id:
     | '__root__'
     | '/_authenticated'
-    | '/_authenticated/admin'
     | '/_guest/auth'
     | '/_authenticated/'
-    | '/_authenticated/admin/'
     | '/_authenticated/selesai/'
   fileRoutesById: FileRoutesById
 }
@@ -112,13 +93,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuestAuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/selesai/': {
       id: '/_authenticated/selesai/'
       path: '/selesai'
@@ -126,38 +100,15 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSelesaiIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/': {
-      id: '/_authenticated/admin/'
-      path: '/'
-      fullPath: '/admin/'
-      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
-      parentRoute: typeof AuthenticatedAdminRouteRoute
-    }
   }
 }
-
-interface AuthenticatedAdminRouteRouteChildren {
-  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
-}
-
-const AuthenticatedAdminRouteRouteChildren: AuthenticatedAdminRouteRouteChildren =
-  {
-    AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
-  }
-
-const AuthenticatedAdminRouteRouteWithChildren =
-  AuthenticatedAdminRouteRoute._addFileChildren(
-    AuthenticatedAdminRouteRouteChildren,
-  )
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedSelesaiIndexRoute: typeof AuthenticatedSelesaiIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedSelesaiIndexRoute: AuthenticatedSelesaiIndexRoute,
 }
