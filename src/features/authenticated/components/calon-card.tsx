@@ -14,8 +14,8 @@ import {
   ItemContent,
   ItemDescription,
   ItemTitle,
-} from "@/components/ui/item";
-import { cn } from "@/lib/utils";
+} from "#/components/ui/item";
+import { cn } from "#/lib/utils";
 import { zElectionCategoryType } from "#/services/_generated/schema";
 import { useCandidates } from "#/services/election";
 import { Skeleton } from "#/components/ui/skeleton";
@@ -75,10 +75,10 @@ export function CalonCard({
             <img
               src={
                 candidate.is_empty_box
-                  // ? "/udinus.webp"
-                  ? "https://avatar.vercel.sh/shadcn1"
-                  // : candidate.photo_url || "https://avatar.vercel.sh/shadcn1"
-                  : "https://avatar.vercel.sh/shadcn1"
+                  ? // ? "/udinus.webp"
+                    "https://avatar.vercel.sh/shadcn1"
+                  : // : candidate.photo_url || "https://avatar.vercel.sh/shadcn1"
+                    "https://avatar.vercel.sh/shadcn1"
               }
               className={cn(
                 "absolute inset-0 w-full h-full object-cover object-top",
