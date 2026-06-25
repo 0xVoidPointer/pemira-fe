@@ -32,6 +32,7 @@ export function SelectionCategory({
   icon: Icon,
 }: SelectionCategoryProps) {
   const { data, isLoading } = useCandidates(type);
+
   const { votes, setVote } = useVoteStore();
   const categoryId = data?.[0]?.category_id;
   const selectedCandidateId = categoryId ? votes[categoryId] : undefined;
@@ -106,9 +107,7 @@ export function SelectionCategory({
                           : ketua?.student?.name
                             ? `${ketua.student.name}`
                             : `Paslon No. ${candidate.number}`}*/}
-                        {candidate.is_empty_box
-                          ? "Kotak Kosong"
-                          : "Rin Tohsaka"}
+                        {candidate.is_empty_box ? "Kotak Kosong" : "Dummy"}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5 truncate flex items-center gap-1">
                         <GraduationCap className="size-3 shrink-0" />

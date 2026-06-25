@@ -45,6 +45,7 @@ export function CalonCard({
   electionCategory: ELECTION_CATEGORY;
 }) {
   const { data, isLoading } = useCandidates(electionCategory);
+
   // const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
 
   // useEffect(() => {
@@ -96,9 +97,7 @@ export function CalonCard({
               <div className="flex items-center gap-3">
                 <div className="flex-1 min-w-0">
                   <CardTitle className="text-sm md:text-base leading-tight">
-                    {candidate.is_empty_box
-                      ? "Kotak Kosong"
-                      : "Rin Tohsaka (Dummy)"}
+                    {candidate.is_empty_box ? "Kotak Kosong" : "Dummy"}
                   </CardTitle>
                   {!candidate.is_empty_box && (
                     <CardDescription className="mt-1 flex items-center gap-1">

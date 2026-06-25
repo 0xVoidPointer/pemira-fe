@@ -81,6 +81,8 @@ export const zCandidate = z.object({
 export const zCandidateMember = z.object({
   id: z.uuid().optional(),
   candidate_id: z.uuid().optional(),
+  name: z.string().optional(),
+  nim: z.string().optional(),
   student_id: z.uuid().optional(),
   role: zCandidateRole.optional(),
 });
@@ -97,7 +99,7 @@ export const zVoteItem = z.object({
 });
 
 export const zVoteRequest = z.object({
-  votes: z.array(zVoteItem).min(1),
+  votes: z.array(zVoteItem).min(1).max(10),
 });
 
 /**

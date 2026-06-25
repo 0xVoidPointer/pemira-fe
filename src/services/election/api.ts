@@ -22,10 +22,14 @@ const TYPE_PATH_MAP: Record<
 };
 
 export async function getActivePeriod(signal?: AbortSignal) {
-  const json = await http
-    .get("election/active-period", { signal })
-    .json();
-  return zGetApiElectionActivePeriodResponse.parse(json);
+  const json = await http.get("election/active-period", { signal }).json();
+  try {
+    return zGetApiElectionActivePeriodResponse.parse(json);
+  } catch (error) {
+    console.error("Zod parsing error in getActivePeriod:", error);
+    console.log("Raw JSON response was:", json);
+    return json as any;
+  }
 }
 
 export async function getCategories(
@@ -38,7 +42,13 @@ export async function getCategories(
       signal,
     })
     .json();
-  return zGetApiElectionActivePeriodCategoriesResponse.parse(json);
+  try {
+    return zGetApiElectionActivePeriodCategoriesResponse.parse(json);
+  } catch (error) {
+    console.error("Zod parsing error in getCategories for type", type, error);
+    console.log("Raw JSON response was:", json);
+    return json as any;
+  }
 }
 
 export async function getCandidates(
@@ -51,9 +61,15 @@ export async function getCandidates(
       signal,
     })
     .json();
-  return zGetApiElectionActivePeriodCategoriesByTypeCandidatesResponse.parse(
-    json,
-  );
+  try {
+    return zGetApiElectionActivePeriodCategoriesByTypeCandidatesResponse.parse(
+      json,
+    );
+  } catch (error) {
+    console.error("Zod parsing error in getCandidates for type", type, error);
+    console.log("Raw JSON response was:", json);
+    return json as any;
+  }
 }
 
 export async function submitVotes(input: VoteRequest): Promise<void> {
@@ -61,8 +77,16 @@ export async function submitVotes(input: VoteRequest): Promise<void> {
 }
 
 export async function votingSchedule(signal?: AbortSignal) {
-  const json = await http.get("election/active-period/schedule", {
-    signal
-  }).json();
-  return zGetApiElectionActivePeriodScheduleResponse.parse(json);
+  const json = await http
+    .get("election/active-period/schedule", {
+      signal,
+    })
+    .json();
+  try {
+    return zGetApiElectionActivePeriodScheduleResponse.parse(json);
+  } catch (error) {
+    console.error("Zod parsing error in votingSchedule:", error);
+    console.log("Raw JSON response was:", json);
+    return json as any;
+  }
 }
