@@ -16,6 +16,7 @@ function RouteComponent() {
 
   const logOutHandler = useCallback(async () => {
     await logout();
+    
     navigate({ to: "/auth" });
   }, [logout, navigate]);
 

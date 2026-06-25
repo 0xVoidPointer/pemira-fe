@@ -11,6 +11,7 @@ export const Route = createFileRoute("/_guest/auth")({
       await context.queryClient.ensureQueryData({
         ...authKeys.session,
         staleTime: Infinity,
+        retry: false,
       });
       throw redirect({
         to: "/",
