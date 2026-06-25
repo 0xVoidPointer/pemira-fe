@@ -83,7 +83,6 @@ export const zCandidateMember = z.object({
   candidate_id: z.uuid().optional(),
   name: z.string().optional(),
   nim: z.string().optional(),
-  student_id: z.uuid().optional(),
   role: zCandidateRole.optional(),
 });
 
