@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { Toaster, toast } from "sonner";
 import { authKeys } from "#/services/auth/keys";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
+import { env } from "#/env";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -50,18 +51,21 @@ function RootComponent() {
     <>
       <Toaster position="top-center" richColors closeButton />
       <Outlet />
-      <TanStackDevtools
-        config={{
-          position: "bottom-right",
-        }}
-        plugins={[
-          {
-            name: "Tanstack Router",
-            render: <TanStackRouterDevtoolsPanel />,
-          },
-          TanStackQueryDevtools,
-        ]}
-      />
+
+      {env.VITE_STAGING === "dev" && (
+        <TanStackDevtools
+          config={{
+            position: "bottom-right",
+          }}
+          plugins={[
+            {
+              name: "Tanstack Router",
+              render: <TanStackRouterDevtoolsPanel />,
+            },
+            TanStackQueryDevtools,
+          ]}
+        />
+      )}
     </>
   );
 }
