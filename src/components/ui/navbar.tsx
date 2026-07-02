@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Badge } from "./badge";
 
 export function Navbar() {
   return (
@@ -6,9 +6,9 @@ export function Navbar() {
       <h1 className="font-bold text-md md:text-2xl leading-0">
         PEMIRA KAMPUS UDINUS
       </h1>
-      <Button className="bg-white/20 uppercase rounded-full font-bold">
+      <Badge variant={"secondary"} className="w-20 h-9 uppercase font-bold ">
         Aktif
-      </Button>
+      </Badge>
     </nav>
   );
 }

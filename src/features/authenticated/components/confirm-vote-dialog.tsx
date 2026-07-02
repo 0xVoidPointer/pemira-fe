@@ -78,6 +78,9 @@ export function ConfirmVoteDialog({ label }: ConfirmVoteDialogProps) {
         navigate({ to: "/selesai" });
         toast.success("Pemilihan berhasil diselesaikan.");
       },
+      onError: () => {
+        toast.error("Terjadi kesalahan saat menyelesaikan pemilihan.");
+      },
     });
   };
 

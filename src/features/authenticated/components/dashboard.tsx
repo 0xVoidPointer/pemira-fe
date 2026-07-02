@@ -33,7 +33,7 @@ const DASHBOARD_ITEMS = [
 
 export function Dashboard() {
   return (
-    <main className="animate-fade animate-once animate-ease-in-out animate-normal animate-fill-forwards">
+    <main>
       <GreetingPill />
       <section className="flex flex-1 flex-col gap-y-10 mt-8">
         <div className="space-y-4 flex-1 gap-x-4 ">

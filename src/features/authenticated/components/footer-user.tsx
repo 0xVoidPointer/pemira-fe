@@ -17,7 +17,7 @@ export function FooterUser({ steps, visiMisi }: FooterUserProps) {
   return (
     <div
       className={cn(
-        "flex flex-row justify-between gap-x-3 md:gap-x-4 items-center w-full px-4 py-6 md:px-8 border-t bg-background",
+        "flex flex-row justify-between gap-x-3 md:gap-x-4 items-center w-full px-4 py-6 md:px-8 border-t-2 bg-background",
         "pb-[max(env(safe-area-inset-bottom),1.5rem)]",
       )}
     >

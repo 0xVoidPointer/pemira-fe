@@ -15,7 +15,7 @@ export function VisiMisi() {
   const { visiMisi } = routeApi.useSearch();
 
   return (
-    <main className="animate-fade-right animate-once animate-ease-in-out animate-normal animate-fill-forwards flex flex-col gap-y-6">
+    <main className="flex flex-col gap-y-6">
       <div className="flex items-start justify-between">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold flex items-center gap-2">

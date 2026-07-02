@@ -5,6 +5,7 @@ import { Stepper } from "#/components/ui/stepper";
 import { BreadcrumbsPath, FooterUser } from "#/features/authenticated";
 import { Dashboard } from "#/features/authenticated/components/dashboard";
 import { JSX, useEffect, useRef } from "react";
+import { cn } from "#/lib/utils";
 import { VisiMisi } from "#/features/authenticated/components/visi-misi";
 import PemilihanUniversitas from "#/features/authenticated/components/pemilihan-universitas";
 import PemilihanFakultas from "#/features/authenticated/components/pemilihan-fakultas";
@@ -23,6 +24,18 @@ export const Route = createFileRoute("/_authenticated/")({
 function RouteComponent() {
   const { steps, visiMisi } = Route.useSearch();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  
+  const prevStepRef = useRef(steps);
+  const dirRef = useRef<"forward" | "backward">("forward");
+
+  if (steps > prevStepRef.current) dirRef.current = "forward";
+  if (steps < prevStepRef.current) dirRef.current = "backward";
+  
+  const direction = dirRef.current;
+
+  useEffect(() => {
+    prevStepRef.current = steps;
+  }, [steps]);
 
   useEffect(() => {
     if (scrollContainerRef.current) {
@@ -50,7 +63,19 @@ function RouteComponent() {
         ref={scrollContainerRef}
         className="w-full flex-1 overflow-y-auto px-4 py-6 md:px-8"
       >
-        {pageChanger[steps]}
+        <div
+          key={steps}
+          className={cn(
+            "animate-once animate-ease-in-out animate-normal animate-fill-forwards",
+            steps === 2
+              ? "animate-fade"
+              : direction === "forward"
+                ? "animate-fade-right"
+                : "animate-fade-left",
+          )}
+        >
+          {pageChanger[steps]}
+        </div>
       </section>
       <footer className="flex-none">
         <FooterUser steps={steps} visiMisi={visiMisi} />

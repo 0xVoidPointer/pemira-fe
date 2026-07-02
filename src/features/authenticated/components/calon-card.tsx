@@ -61,7 +61,7 @@ export function CalonCard({
   if (isLoading) return <CalonCardSkeleton />;
 
   return (
-    <section className={"flex flex-col gap-y-4 child"}>
+    <section className={"flex flex-col gap-y-4"}>
       {data?.map((candidate, index) => (
         <Card
           key={candidate.id}
@@ -81,6 +81,7 @@ export function CalonCard({
                   : // : candidate.photo_url || "https://avatar.vercel.sh/shadcn1"
                     "https://avatar.vercel.sh/shadcn1"
               }
+              alt="fotocalon"
               className={cn(
                 "absolute inset-0 w-full h-full object-cover object-top",
                 // candidate.is_empty_box && "p-12 opacity-20 grayscale",
@@ -151,18 +152,16 @@ export function CalonCard({
             </CardContent>
 
             {!candidate.is_empty_box && candidate?.members?.length == 2 && (
-              <div className="gap-4 flex-wrap bg-card p-0 flex flex-row mt-2 px-3">
+              <div className="gap-2 flex-wrap bg-card p-0 flex flex-row items-center mt-2 px-3">
                 {candidate.members.map((member) => (
                   <Item
                     key={member.id}
                     variant="outline"
                     size={"sm"}
-                    className="rounded-md py-2 px-4 hover:bg-primary/5 duration-300 transition"
+                    className="rounded-full py-1.5 px-3 hover:bg-primary/5 duration-300 transition"
                   >
                     <ItemContent>
-                      <ItemTitle>
-                        Jane Doe - Fakultas Ilmu Komputer'24
-                      </ItemTitle>
+                      <ItemTitle>{member.name}</ItemTitle>
                     </ItemContent>
                     <ItemActions>
                       <Badge

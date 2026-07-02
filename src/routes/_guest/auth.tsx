@@ -25,7 +25,7 @@ export const Route = createFileRoute("/_guest/auth")({
 
 function RouteComponent() {
   return (
-    <main className="min-h-dvh flex flex-col md:flex-row h-full">
+    <main className="min-h-dvh flex flex-col md:flex-row h-full animate-fade animate-once animate-ease-in-out animate-normal animate-fill-forwards">
       <div
         className={
           "px-0 order-last md:order-first flex flex-col items-center relative overflow-hidden bg-background transition-all duration-500 ease-in-out w-full md:w-full flex-1"

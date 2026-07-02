@@ -16,7 +16,7 @@ function RouteComponent() {
 
   const logOutHandler = useCallback(async () => {
     await logout();
-    
+
     navigate({ to: "/auth" });
   }, [logout, navigate]);
 
@@ -34,7 +34,7 @@ function RouteComponent() {
   }, [countdown, logOutHandler]);
 
   return (
-    <div className="flex min-h-dvh items-center justify-center p-4">
+    <div className="flex min-h-dvh items-center justify-center p-4 animate-fade animate-once animate-ease-in-out animate-normal animate-fill-forwards">
       <Card className="max-w-md w-full text-center shadow-lg border-primary/20">
         <CardHeader className="pb-2">
           <div className="flex justify-center mb-4">
