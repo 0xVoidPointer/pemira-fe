@@ -11,6 +11,8 @@ import { Toaster, toast } from "sonner";
 import { authKeys } from "#/services/auth/keys";
 import TanStackQueryDevtools from "../integrations/tanstack-query/devtools";
 import { env } from "#/env";
+import { GlobalError } from "#/components/ui/global-error";
+import { NotFound } from "#/components/ui/not-found";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -18,6 +20,10 @@ interface MyRouterContext {
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: RootComponent,
+  errorComponent: ({ error, reset }) => (
+    <GlobalError error={error} resetErrorBoundary={reset} />
+  ),
+  notFoundComponent: () => <NotFound />,
 });
 
 function RootComponent() {
