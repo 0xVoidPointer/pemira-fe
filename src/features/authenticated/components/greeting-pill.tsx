@@ -1,12 +1,15 @@
 import { Badge } from "#/components/ui/badge";
 import { env } from "#/env";
+import { useUserStore } from "#/stores/user-store.ts";
 
 export function GreetingPill() {
+  const user = useUserStore((state) => state.user);
+
   return (
-    <div className="bg-primary/10 border-border border w-full px-4 py-6 md:px-8 rounded-2xl h-fit flex flex-col gap-y-2 justify-center text-primary">
+    <div className="bg-primary/5 border-border border w-full px-4 py-6 md:px-8 rounded-2xl h-fit flex flex-col gap-y-2 justify-center text-primary">
       <div className="flex flex-row justify-between items-center">
-        <h1 className="font-black text-xl md:text-3xl leading-tight">
-          Halo, John Doe! 👋
+        <h1 className="font-bold text-xl md:text-3xl leading-tight capitalize">
+          Halo, {user?.name}! 👋
         </h1>
         <Badge
           variant={"outline"}

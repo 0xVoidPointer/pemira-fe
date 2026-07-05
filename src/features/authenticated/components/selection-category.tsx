@@ -82,8 +82,8 @@ export function SelectionCategory({
                     <div className="relative shrink-0">
                       <Avatar className="size-11 rounded-md">
                         <AvatarImage
-                          src={candidate.photo_url ?? ""}
-                          className="object-cover object-top"
+                          src={candidate.photo_url_portrait ?? ""}
+                          className="object-cover object-bottom"
                         />
                         <AvatarFallback className="rounded-md bg-primary/10 text-primary text-sm font-semibold">
                           {/*{candidate.is_empty_box
@@ -107,7 +107,11 @@ export function SelectionCategory({
                           : ketua?.student?.name
                             ? `${ketua.student.name}`
                             : `Paslon No. ${candidate.number}`}*/}
-                        {candidate.is_empty_box ? "Kotak Kosong" : "Dummy"}
+                        {candidate.is_empty_box
+                          ? "Kotak Kosong"
+                          : candidate.members
+                              ?.map((member) => member.name)
+                              .join(" & ")}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5 truncate flex items-center gap-1">
                         <GraduationCap className="size-3 shrink-0" />
@@ -187,7 +191,7 @@ export function SelectionCategory({
                                 </Avatar>
                                 <span className="text-foreground font-medium">
                                   {/*{member.student?.name ?? "—"}*/}
-                                  Tung Tung
+                                  {member.name}
                                 </span>
                                 <Badge
                                   variant={

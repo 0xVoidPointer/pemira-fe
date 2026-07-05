@@ -1,9 +1,8 @@
-import { BookOpen, GraduationCap, Pin } from "lucide-react";
+import { BookOpen, Pin } from "lucide-react";
 import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "#/components/ui/card";
@@ -19,9 +18,8 @@ import { cn } from "#/lib/utils";
 import { zElectionCategoryType } from "#/services/_generated/schema";
 import { useCandidates } from "#/services/election";
 import { Skeleton } from "#/components/ui/skeleton";
-
+import { useIsMobile } from "#/hooks/use-mobile.tsx";
 import z from "zod";
-// import { useEffect, useState } from "react";
 
 const BORDER_COLORS = [
   "border-blue-500",
@@ -37,7 +35,6 @@ const BORDER_COLORS = [
 ];
 
 type ELECTION_CATEGORY = z.infer<typeof zElectionCategoryType>;
-// const MOBILE_BREAKPOINT = 768;
 
 export function CalonCard({
   electionCategory,
@@ -46,17 +43,7 @@ export function CalonCard({
 }) {
   const { data, isLoading } = useCandidates(electionCategory);
 
-  // const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
-
-  // useEffect(() => {
-  //   const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
-  //   const onChange = () => {
-  //     setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-  //   };
-  //   mql.addEventListener("change", onChange);
-  //   setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
-  //   return () => mql.removeEventListener("change", onChange);
-  // }, []);
+  const isMobile = useIsMobile();
 
   if (isLoading) return <CalonCardSkeleton />;
 
@@ -72,18 +59,20 @@ export function CalonCard({
           )}
         >
           {/* Left Photo */}
-          <div className="relative h-40 md:h-auto md:w-48 shrink-0 overflow-hidden rounded-t-lg md:rounded-t-none md:rounded-l-lg">
+          <div className="relative h-40 md:h-auto md:w-48 md:aspect-3/4 md:self-start shrink-0 overflow-hidden rounded-t-lg md:rounded-t-none md:rounded-l-lg">
             <img
               src={
                 candidate.is_empty_box
-                  ? // ? "/udinus.webp"
-                    "https://avatar.vercel.sh/shadcn1"
-                  : // : candidate.photo_url || "https://avatar.vercel.sh/shadcn1"
-                    "https://avatar.vercel.sh/shadcn1"
+                  ? "https://avatar.vercel.sh/shadcn1"
+                  : !isMobile
+                    ? (candidate.photo_url_portrait ??
+                      "https://avatar.vercel.sh/shadcn1")
+                    : (candidate.photo_url_landscape ??
+                      "https://avatar.vercel.sh/shadcn1")
               }
               alt="fotocalon"
               className={cn(
-                "absolute inset-0 w-full h-full object-cover object-top",
+                "absolute inset-0 w-full h-full object-cover",
                 // candidate.is_empty_box && "p-12 opacity-20 grayscale",
               )}
             />
@@ -92,22 +81,16 @@ export function CalonCard({
             </span>
           </div>
 
-          {/*Right Side (this is not ai woi)*/}
+          {/*Right Side*/}
           <div className="flex flex-col flex-1 min-w-0 py-4 gap-y-2 pt-0 md:pt-4">
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="flex-1 min-w-0">
                   <CardTitle className="text-sm md:text-base leading-tight">
-                    {candidate.is_empty_box ? "Kotak Kosong" : "Dummy"}
+                    {candidate.is_empty_box
+                      ? "Kotak Kosong"
+                      : candidate.members?.map((c) => c.name).join(" & ")}
                   </CardTitle>
-                  {!candidate.is_empty_box && (
-                    <CardDescription className="mt-1 flex items-center gap-1">
-                      <GraduationCap className="size-3.5 shrink-0" />
-                      <span className="truncate text-sm md:text-base">
-                        {"Fakultas Ilmu Komputer (Dummy)"}
-                      </span>
-                    </CardDescription>
-                  )}
                 </div>
                 <CardAction>
                   <Badge variant="outline">No. {candidate.number}</Badge>
