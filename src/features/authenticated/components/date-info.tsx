@@ -143,18 +143,18 @@ export function DateInfo() {
     return (
       <Card className="border-primary/20 bg-primary/[0.07]">
         <CardContent className="space-y-6 p-5 sm:p-8">
-          <Skeleton className="h-1.5 w-full rounded-full bg-primary/15" />
+          <Skeleton className="h-1.5 w-full rounded-full" />
           <div className="flex flex-col items-center gap-5 py-2">
-            <Skeleton className="h-6 w-36 rounded-full bg-primary/15" />
+            <Skeleton className="h-6 w-36 rounded-full" />
             <div className="flex items-center gap-2 sm:gap-3">
               {Array.from({ length: 7 }).map((_, i) =>
                 i % 2 === 0 ? (
                   <div key={i} className="flex flex-col items-center gap-2">
                     <Skeleton className="size-15 rounded-xl bg-background/50 sm:size-19 sm:rounded-2xl" />
-                    <Skeleton className="h-3 w-10 rounded bg-primary/15" />
+                    <Skeleton className="h-3 w-10 rounded" />
                   </div>
                 ) : (
-                  <Skeleton key={i} className="h-6 w-4 rounded bg-primary/15" />
+                  <Skeleton key={i} className="h-6 w-4 rounded" />
                 ),
               )}
             </div>
