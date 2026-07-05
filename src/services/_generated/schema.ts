@@ -15,6 +15,13 @@ export const zMessageResponse = z.object({
   message: z.string().optional(),
 });
 
+export const zLoginStudentResponse = z.object({
+  nim: z.string().optional(),
+  name: z.string().optional(),
+  faculty_code: z.string().optional(),
+  faculty_name: z.string().optional(),
+});
+
 export const zPeriodStatus = z.enum(["DRAFT", "VOTING", "DONE"]);
 
 export const zElectionCategoryType = z.enum([
@@ -118,7 +125,7 @@ export const zPostApiStudentAuthBody = zLoginRequestStudent;
 /**
  * Login success (JWT set via HttpOnly cookie)
  */
-export const zPostApiStudentAuthResponse = zMessageResponse;
+export const zPostApiStudentAuthResponse = zLoginStudentResponse;
 
 /**
  * Logged out
