@@ -1,3 +1,5 @@
+import { getRouteApi, Link } from "@tanstack/react-router";
+import React from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -5,10 +7,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { getRouteApi, Link } from "@tanstack/react-router";
-import { breadcrumbsItems } from "../utils/breadrumbs-items";
-import * as React from "react";
+} from "#/components/ui/breadcrumb";
+import { breadcrumbsItems } from "../utils/breadcrumbs-items";
 
 export function BreadcrumbsPath({ steps = 2 }: { steps?: number }) {
   const routeApi = getRouteApi("/_authenticated/");
@@ -26,8 +26,10 @@ export function BreadcrumbsPath({ steps = 2 }: { steps?: number }) {
               <BreadcrumbItem>
                 {isActive ? (
                   <BreadcrumbPage className="font-semibold flex flex-row items-center justify-center gap-x-2">
-                    {val.icon}
-                    <span className="hidden sm:inline">{val.name}</span>
+                    <div aria-hidden="true">{val.icon}</div>
+                    <span className="sr-only sm:not-sr-only sm:inline">
+                      {val.name}
+                    </span>
                   </BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink
@@ -42,8 +44,10 @@ export function BreadcrumbsPath({ steps = 2 }: { steps?: number }) {
                       }}
                       resetScroll={false}
                     >
-                      {val.icon}
-                      <span className="hidden sm:inline">{val.name}</span>
+                      <div aria-hidden="true">{val.icon}</div>
+                      <span className="sr-only sm:not-sr-only sm:inline">
+                        {val.name}
+                      </span>
                     </Link>
                   </BreadcrumbLink>
                 )}

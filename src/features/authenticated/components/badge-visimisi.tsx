@@ -1,6 +1,6 @@
+import type z from "zod";
 import { Badge } from "#/components/ui/badge";
-import { zElectionCategoryType } from "#/services/_generated/schema";
-import z from "zod";
+import type { zElectionCategoryType } from "#/services/_generated/schema";
 
 const VISI_MISI_ITEMS = [
   { label: "DPM KM", value: "DPM" },
@@ -21,7 +21,7 @@ export function BadgeVisiMisi({
         <Badge
           key={item.value}
           variant={electionCategory === item.value ? "default" : "outline"}
-          className="md:h-8 cursor-pointer px-4"
+          className="md:h-8 px-4"
         >
           {item.label}
         </Badge>

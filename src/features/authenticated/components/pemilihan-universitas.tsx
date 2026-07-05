@@ -3,7 +3,7 @@ import { SelectionCategory } from "./selection-category";
 
 export default function PemilihanUniversitas() {
   return (
-    <main className="flex flex-col gap-y-6">
+    <section className="flex flex-col gap-y-6">
       <div className="flex items-start justify-between">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold flex items-center gap-2">
@@ -18,6 +18,6 @@ export default function PemilihanUniversitas() {
 
       <SelectionCategory type="DPM" title="DPM KM" icon={Hammer} />
       <SelectionCategory type="PRESIDENT" title="BEM KM" icon={Crown} />
-    </main>
+    </section>
   );
 }

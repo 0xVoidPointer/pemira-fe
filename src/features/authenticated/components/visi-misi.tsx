@@ -1,7 +1,7 @@
+import { getRouteApi } from "@tanstack/react-router";
 import { Users } from "lucide-react";
 import { BadgeVisiMisi } from "./badge-visimisi";
 import { CalonCard } from "./calon-card";
-import { getRouteApi } from "@tanstack/react-router";
 
 /**
  * 1. fetch /api/election/active-period/categories
@@ -15,12 +15,12 @@ export function VisiMisi() {
   const { visiMisi } = routeApi.useSearch();
 
   return (
-    <main className="flex flex-col gap-y-6">
+    <section className="flex flex-col gap-y-6">
       <div className="flex items-start justify-between">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             <Users className="size-5 text-primary" />
-            Visi &amp; Misi Setiap Calon
+            Visi & Misi Setiap Calon
           </h2>
           <p className="text-sm text-muted-foreground">
             Pelajari visi, misi, dan program kerja setiap calon sebelum memilih.
@@ -29,6 +29,6 @@ export function VisiMisi() {
       </div>
       <BadgeVisiMisi electionCategory={visiMisi} />
       <CalonCard electionCategory={visiMisi} />
-    </main>
+    </section>
   );
 }

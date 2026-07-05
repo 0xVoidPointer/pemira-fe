@@ -14,9 +14,14 @@ export function NotFound() {
       <Card className="w-full max-w-md shadow-lg border-muted animate-in fade-in zoom-in-95 duration-300">
         <CardHeader className="text-center pb-2">
           <div className="mx-auto bg-muted p-3 rounded-full mb-4 w-fit">
-            <MapPinOff className="size-8 text-muted-foreground" />
+            <MapPinOff
+              className="size-8 text-muted-foreground"
+              aria-hidden="true"
+            />
           </div>
-          <CardTitle className="text-2xl font-bold">Halaman Tidak Ditemukan</CardTitle>
+          <CardTitle className="text-2xl font-bold">
+            Halaman Tidak Ditemukan
+          </CardTitle>
           <CardDescription>
             Maaf, kami tidak dapat menemukan halaman yang Anda cari.
           </CardDescription>

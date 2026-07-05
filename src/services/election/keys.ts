@@ -12,8 +12,8 @@ export const electionKeys = createQueryKeys("election", {
     queryKey: null,
     queryFn: ({ signal }) => getActivePeriod(signal),
   },
-  categories: (type: ElectionCategoryType) => ({
-    queryKey: [type],
+  categories: (type?: ElectionCategoryType) => ({
+    queryKey: type ? [type] : ["all"],
     queryFn: ({ signal }) => getCategories(type, signal),
   }),
   candidates: (type: ElectionCategoryType) => ({

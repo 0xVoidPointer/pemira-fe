@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { ChevronRight, Loader2 } from "lucide-react";
-import { Button } from "#/components/ui/button";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,10 +11,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { useVoteStore } from "@/stores/use-vote-store";
-import { useCandidates, useSubmitVotes } from "@/services/election";
-import { toast } from "sonner";
+} from "#/components/ui/alert-dialog";
+import { Button } from "#/components/ui/button";
+import {
+  useCandidates,
+  useCategories,
+  useSubmitVotes,
+} from "#/services/election";
+import { useVoteStore } from "#/stores/use-vote-store";
+import type { zCandidateWithMembers } from "#/services/_generated/schema";
+import type z from "zod";
+
+type CandidateWithMembers = z.infer<typeof zCandidateWithMembers>;
 
 interface ConfirmVoteDialogProps {
   label: string;
@@ -29,13 +37,18 @@ export function ConfirmVoteDialog({ label }: ConfirmVoteDialogProps) {
   const dpm = useCandidates("DPM");
   const faculty = useCandidates("FACULTY_GOVERNOR");
 
+  const { data: categoriesData } = useCategories();
+  const totalCategories = categoriesData?.length ?? 3;
+
   const getSelectionSummary = () => {
     const summary = [];
 
-    const findCandidate = (data: any[] | undefined, candidateId: string) =>
-      data?.find((c) => c.id === candidateId);
+    const findCandidate = (
+      data: CandidateWithMembers[] | undefined,
+      candidateId: string,
+    ) => data?.find((c) => c.id === candidateId);
 
-    const formatValue = (candidate: any) => {
+    const formatValue = (candidate: CandidateWithMembers | undefined) => {
       if (!candidate) return "Dipilih";
       if (candidate.is_empty_box) return "Kotak Kosong";
       return `Paslon No. ${candidate.number}`;
@@ -134,11 +147,11 @@ export function ConfirmVoteDialog({ label }: ConfirmVoteDialogProps) {
                   </p>
                 )}
               </div>
-              {summary.length < 3 && (
+              {summary.length < totalCategories && (
                 <p className="text-xs text-destructive font-medium bg-destructive/10 p-3 rounded-md border border-destructive/20">
-                  Mohon lengkapi semua pilihan (3/3) sebelum mengirim. Pastikan
-                  Anda telah memilih kandidat untuk semua kategori yang
-                  tersedia.
+                  Mohon lengkapi semua pilihan ({summary.length}/
+                  {totalCategories}) sebelum mengirim. Pastikan Anda telah
+                  memilih kandidat untuk semua kategori yang tersedia.
                 </p>
               )}
             </div>
@@ -151,7 +164,7 @@ export function ConfirmVoteDialog({ label }: ConfirmVoteDialogProps) {
               e.preventDefault();
               handleSubmit();
             }}
-            disabled={isPending || summary.length < 3}
+            disabled={isPending || summary.length < totalCategories}
           >
             {isPending ? "Mengirim..." : "Ya, Kirim Pilihan"}
           </AlertDialogAction>

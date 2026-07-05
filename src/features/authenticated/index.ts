@@ -1,4 +1,4 @@
 export * from "./components/breadcrumbs-path";
 export * from "./components/greeting-pill";
 export * from "./components/footer-user";
-export * from "./utils/breadrumbs-items";
+export * from "./utils/breadcrumbs-items";

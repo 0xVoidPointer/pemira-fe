@@ -27,12 +27,12 @@ export async function getActivePeriod(signal?: AbortSignal) {
 }
 
 export async function getCategories(
-  type: ElectionCategoryType,
+  type?: ElectionCategoryType,
   signal?: AbortSignal,
 ) {
   const json = await http
     .get("election/active-period/categories", {
-      searchParams: { type },
+      searchParams: type ? { type } : undefined,
       signal,
     })
     .json();

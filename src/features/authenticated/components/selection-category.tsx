@@ -1,15 +1,14 @@
-import { LucideIcon, GraduationCap, BookOpen, Pin } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { Separator } from "@/components/ui/separator";
-import { useCandidates } from "@/services/election";
-import { Skeleton } from "@/components/ui/skeleton";
-import type { ElectionCategoryType } from "@/services/election";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useVoteStore } from "@/stores/use-vote-store";
-import { cn } from "@/lib/utils";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { BookOpen, GraduationCap, type LucideIcon, Pin } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "#/components/ui/avatar";
+import { Badge } from "#/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
+import { RadioGroup, RadioGroupItem } from "#/components/ui/radio-group";
+import { Separator } from "#/components/ui/separator";
+import { Skeleton } from "#/components/ui/skeleton";
+import { cn } from "#/lib/utils";
+import type { ElectionCategoryType } from "#/services/election";
+import { useCandidates } from "#/services/election";
+import { useVoteStore } from "#/stores/use-vote-store";
 
 interface SelectionCategoryProps {
   type: ElectionCategoryType;
@@ -65,14 +64,15 @@ export function SelectionCategory({
               // const wakil = candidate.members?.find((m) => m.role === "WAKIL");
 
               return (
-                <div
+                <label
                   key={candidate.id}
+                  htmlFor={candidate.id}
                   className={cn(
-                    "rounded-lg border transition-all duration-300 cursor-pointer overflow-hidden",
+                    "rounded-lg border transition-all duration-300 cursor-pointer overflow-hidden block",
                     candidate.is_empty_box && "border-dashed",
                     isSelected
                       ? "border-primary ring-2 ring-primary/30 bg-primary/5"
-                      : "border-border hover:border-primary/40 hover:shadow-sm",
+                      : "border-border hover:border-primary/40 hover:shadow-sm focus-within:ring-2 focus-within:ring-primary/50",
                   )}
                   onClick={() =>
                     categoryId && setVote(categoryId, candidate.id!)
@@ -210,7 +210,7 @@ export function SelectionCategory({
                       </div>
                     </div>
                   </div>
-                </div>
+                </label>
               );
             })}
           </RadioGroup>

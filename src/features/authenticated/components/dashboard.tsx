@@ -1,8 +1,8 @@
 import { ArrowRight, Heart, Info, ShieldCheck, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "#/components/ui/card";
 import { cn } from "#/lib/utils";
-import { GreetingPill } from "./greeting-pill";
 import { DateInfo } from "./date-info";
+import { GreetingPill } from "./greeting-pill";
 
 const DASHBOARD_ITEMS = [
   {
@@ -18,22 +18,22 @@ const DASHBOARD_ITEMS = [
     description:
       "Suaramu menentukan pemimpin yang akan mewakili mahasiswa selama 1 tahun ke depan. Partisipasi aktifmu sangat berarti.",
     icon: Star,
-    color: "text-yellow-500",
-    bg: "bg-yellow-500/10",
+    color: "text-accent",
+    bg: "bg-accent/10",
   },
   {
     title: "Terima Kasih",
     description:
       "Atas partisipasi aktif seluruh mahasiswa dalam menjaga demokrasi kampus. Bersama kita wujudkan UDINUS yang lebih baik.",
     icon: Heart,
-    color: "text-green-500",
-    bg: "bg-green-500/10",
+    color: "text-primary",
+    bg: "bg-primary/10",
   },
 ];
 
 export function Dashboard() {
   return (
-    <main>
+    <section>
       <GreetingPill />
       <section className="flex flex-1 flex-col gap-y-10 mt-8">
         <div className="space-y-4 flex-1 gap-x-4 ">
@@ -70,9 +70,9 @@ export function Dashboard() {
           ))}
         </div>
 
-        <div className="hidden lg:block bg-card rounded-3xl p-8 ring-1 ring-foreground/10 shadow-sm overflow-hidden relative">
+        <div className="block bg-card rounded-3xl p-6 md:p-8 ring-1 ring-foreground/10 shadow-sm overflow-hidden relative">
           <div className="absolute top-0 right-0 p-8 opacity-5">
-            <Info className="size-32 rotate-12" />
+            <Info className="size-32 rotate-12" aria-hidden="true" />
           </div>
 
           <div className="relative z-10">
@@ -94,7 +94,10 @@ export function Dashboard() {
                 </div>
               </div>
 
-              <ArrowRight className="text-muted-foreground/20 shrink-0" />
+              <ArrowRight
+                className="text-muted-foreground/20 shrink-0"
+                aria-hidden="true"
+              />
 
               <div className="flex flex-1 gap-4 items-start">
                 <div className="shrink-0 size-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-lg">
@@ -109,7 +112,10 @@ export function Dashboard() {
                 </div>
               </div>
 
-              <ArrowRight className="text-muted-foreground/20 shrink-0" />
+              <ArrowRight
+                className="text-muted-foreground/20 shrink-0"
+                aria-hidden="true"
+              />
 
               <div className="flex flex-1 gap-4 items-start">
                 <div className="shrink-0 size-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-lg">
@@ -127,6 +133,6 @@ export function Dashboard() {
           </div>
         </div>
       </section>
-    </main>
+    </section>
   );
 }

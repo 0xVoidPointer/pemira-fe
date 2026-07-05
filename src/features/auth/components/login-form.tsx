@@ -1,16 +1,14 @@
 import { Eye, EyeOff, IdCard, Loader2, Lock } from "lucide-react";
-import { Separator } from "#/components/ui/separator";
-import { Button } from "@/components/ui/button";
-import { Field, FieldLabel } from "@/components/ui/field";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "#/components/ui/button";
+import { Field, FieldLabel } from "#/components/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from "@/components/ui/input-group";
-import { GoogleLoginButton } from "./google-login-button";
-import { useState } from "react";
+} from "#/components/ui/input-group";
 import { zLoginRequestStudent } from "#/services/_generated/schema";
-import { toast } from "sonner";
 import { useStudentLogin } from "#/services/auth/hooks/use-student-login";
 
 export function LoginForm() {
@@ -39,7 +37,9 @@ export function LoginForm() {
   return (
     <section>
       <div className="my-8">
-        <h1 className="text-4xl font-bold text-primary">MASUK KE PEMIRA</h1>
+        <h1 className="text-4xl font-bold text-primary uppercase">
+          Masuk ke Pemira
+        </h1>
         <p className="text-muted-foreground">
           Portal Pemilihan Raya Universitas Dian Nuswantoro
         </p>
@@ -85,7 +85,20 @@ export function LoginForm() {
               </InputGroupAddon>
               <InputGroupAddon
                 align="inline-end"
+                role="button"
+                tabIndex={0}
+                aria-label={
+                  isPasswordVisible
+                    ? "Sembunyikan password"
+                    : "Tampilkan password"
+                }
                 onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setIsPasswordVisible(!isPasswordVisible);
+                  }
+                }}
                 className="cursor-pointer"
               >
                 {isPasswordVisible ? (
@@ -113,18 +126,6 @@ export function LoginForm() {
           </Button>
         </div>
       </form>
-
-      <div className="relative w-full my-8">
-        <div className="absolute inset-0 flex items-center">
-          <Separator />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-2 text-muted-foreground">
-            Atau Masuk Dengan
-          </span>
-        </div>
-      </div>
-      <GoogleLoginButton />
     </section>
   );
 }

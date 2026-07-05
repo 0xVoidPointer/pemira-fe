@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
-import { cn } from "#/lib/utils";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Skeleton } from "@/components/ui/skeleton";
 import { CalendarCheck2, CalendarClock, Clock, Timer } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Badge } from "#/components/ui/badge";
+import { Card, CardContent } from "#/components/ui/card";
+import { Progress } from "#/components/ui/progress";
+import { Skeleton } from "#/components/ui/skeleton";
+import { cn } from "#/lib/utils";
 import { useActiveSchedule } from "#/services/election/hooks/use-active-schedule";
 
 function formatDate(date: Date) {
@@ -178,7 +178,7 @@ export function DateInfo() {
           className={cn(
             "h-0.5 w-full",
             status.isNotStarted && "bg-primary/60",
-            status.isActive && "bg-emerald-500/60",
+            status.isActive && "bg-primary/60",
             status.isEnded && "bg-muted-foreground/20",
           )}
         />
@@ -188,7 +188,7 @@ export function DateInfo() {
             className={cn(
               "h-1 rounded-full bg-primary/10", // Track biru tipis
               status.isNotStarted && "[&>div]:bg-primary/70",
-              status.isActive && "[&>div]:bg-emerald-500",
+              status.isActive && "[&>div]:bg-primary",
               status.isEnded && "[&>div]:bg-muted-foreground/30",
             )}
           />
@@ -209,7 +209,7 @@ export function DateInfo() {
             "gap-1.5 border px-4 py-1 text-[10px] font-bold tracking-[0.2em]",
             !status.isEnded && "animate-pulse",
             status.isActive &&
-              "border-emerald-500/20 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:text-emerald-400 dark:hover:bg-emerald-950/70",
+              "border-primary/20 bg-primary/10 text-primary hover:bg-primary/20",
           )}
         >
           <status.icon className="size-3" />

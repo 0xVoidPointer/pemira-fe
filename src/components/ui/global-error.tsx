@@ -15,16 +15,23 @@ interface GlobalErrorProps {
 
 export function GlobalError({ error, resetErrorBoundary }: GlobalErrorProps) {
   const errorMessage =
-    error instanceof Error ? error.message : "Terjadi kesalahan yang tidak diketahui.";
+    error instanceof Error
+      ? error.message
+      : "Terjadi kesalahan yang tidak diketahui.";
 
   return (
     <div className="min-h-dvh flex items-center justify-center p-4 bg-background">
       <Card className="w-full max-w-md shadow-lg border-destructive/20 animate-in fade-in zoom-in-95 duration-300">
         <CardHeader className="text-center pb-2">
           <div className="mx-auto bg-destructive/10 p-3 rounded-full mb-4 w-fit">
-            <AlertTriangle className="size-8 text-destructive" />
+            <AlertTriangle
+              className="size-8 text-destructive"
+              aria-hidden="true"
+            />
           </div>
-          <CardTitle className="text-2xl font-bold">Terjadi Kesalahan</CardTitle>
+          <CardTitle className="text-2xl font-bold">
+            Terjadi Kesalahan
+          </CardTitle>
           <CardDescription>
             Maaf, ada masalah saat memuat halaman ini.
           </CardDescription>
