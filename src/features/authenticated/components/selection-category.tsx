@@ -160,7 +160,7 @@ export function SelectionCategory({
                               <BookOpen className="size-3" />
                               Visi
                             </p>
-                            <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3">
+                            <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">
                               {candidate.vision}
                             </p>
                           </div>
@@ -169,7 +169,7 @@ export function SelectionCategory({
                               <Pin className="size-3" />
                               Misi
                             </p>
-                            <p className="text-xs text-muted-foreground leading-relaxed line-clamp-3 whitespace-pre-line">
+                            <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-line">
                               {candidate.mission}
                             </p>
                           </div>

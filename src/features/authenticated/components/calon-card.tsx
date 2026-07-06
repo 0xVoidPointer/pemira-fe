@@ -102,7 +102,7 @@ export function CalonCard({
                       <Pin className="size-4" />
                       Misi
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-4">
+                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
                       {candidate.mission}
                     </p>
                   </div>
