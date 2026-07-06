@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="icon" type="image/png" href="/logoudinus300.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Primary Meta Tags -->
@@ -27,67 +27,18 @@
     <meta property="twitter:title" content="PEMIRA UDINUS" />
     <meta property="twitter:description" content="Sistem Pemilihan Raya Mahasiswa Universitas Dian Nuswantoro. Gunakan hak suaramu untuk kampus yang lebih baik." />
     <meta property="twitter:image" content="https://pemira.dinus.id/logoudinus300.png" />
-    <style>
-      #initial-loader {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100dvh;
-        gap: 1.5rem;
-        background-color: #ffffff;
-        font-family: system-ui, -apple-system, sans-serif;
-      }
-      .mascots {
-        display: flex;
-        align-items: flex-end;
-        justify-content: center;
-        gap: 0.5rem;
-      }
-      .mascot {
-        width: 6rem;
-        height: 6rem;
-        object-fit: contain;
-      }
-      .dino {
-        animation: float 3s ease-in-out infinite;
-      }
-      .dina {
-        animation: float 3s ease-in-out 1.5s infinite;
-      }
-      .loading-text {
-        color: #114d91;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        font-size: 0.875rem;
-        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-      }
-      @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-12px); }
-      }
-      @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-      }
-      @media (prefers-color-scheme: dark) {
-        #initial-loader { background-color: #0b0f19; }
-        .loading-text { color: #f8fafc; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        .dino, .dina, .loading-text { animation: none; }
-      }
-    </style>
   </head>
   <body>
     <div id="root">
-      <div id="initial-loader">
-        <div class="mascots">
-          <img class="mascot dino" src="/maskot dino.svg" alt="Mascot Dino" />
-          <img class="mascot dina" src="/maskot dina.svg" alt="Mascot Dina" />
-        </div>
-        <p class="loading-text">Memuat...</p>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100dvh;
+        "
+      >
+        <img src="/loader.svg" alt="Loader" />
       </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
