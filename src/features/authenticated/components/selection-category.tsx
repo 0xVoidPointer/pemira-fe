@@ -97,7 +97,7 @@ export function SelectionCategory({
                           <AvatarImage
                             src={candidate.photo_url_portrait ?? ""}
                             alt={`Foto ${candidate.members?.map((m) => m.name).join(" & ") ?? "Kandidat"}`}
-                            className="object-cover object-top"
+                            className="object-cover"
                           />
                           <AvatarFallback className="rounded-md bg-primary/10 text-primary text-sm font-semibold">
                             {getInitials(
